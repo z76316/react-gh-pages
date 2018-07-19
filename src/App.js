@@ -27,6 +27,7 @@ ContentBox.propTypes = {
   content: PropTypes.string.isRequired,
 };
 
+
 class ShowMore extends Component {
   constructor(props) {
     super(props);
@@ -57,13 +58,40 @@ onStateChange = () => {
   }
 }
 
+ShowMore.PropTypes
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      floatMenu: false,
+      oWelcome: '',
+      cWelcome: 'none',
+    };
+  }
+
+  xFloatMenu = () => {
+    this.state.floatMenu = false;
+    this.setState(this.state);
+  }
+
+  openFloatMenu = () => {
+    this.state.floatMenu = true;
+    this.setState(this.state);
+  }
+
+  changeWelcome = () => {
+    this.state.oWelcome = 'none';
+    this.state.cWelcome = '';
+    this.setState(this.state);
+  }
+
   render() {
     return (
       <div className="App">
-  
-        <div className="mobile-float-menu">
-          <button className="x">x</button>
+
+        <div className="mobile-float-menu" style={{display: this.state.floatMenu ? '' : 'none'}}>
+          <button className="x" onClick={this.xFloatMenu}>x</button>
           <ul>
             <li><a href="#">Team</a></li>
             <li><a href="#">Player</a></li>
@@ -78,7 +106,7 @@ class App extends Component {
               <img className="logo" src={soccerIcon} alt="Soccer" />
               <p className="title">Beyond World Cup</p>
             </div>
-            <div className="menu-icon">
+            <div className="menu-icon" onClick={this.openFloatMenu}>
               <div></div>
               <div></div>
               <div></div>
@@ -96,8 +124,14 @@ class App extends Component {
         {/*<!--/.main-header-->*/}
 
         <div className="banner">
-          <h1 className="headline">Destiny</h1>
-          <span className="tagline">That is the owner of World Cup and why you here.</span>
+          <div className="originalWelcome" onClick={this.changeWelcome} style={{display: this.state.oWelcome}}>
+            <h1 className="headline">Destiny</h1>
+            <span className="tagline">That is the owner of World Cup and why you here.</span>
+          </div>
+          <div className="clickedWelcome" style={{display: this.state.cWelcome}}>
+            <h1 className="headline">Have a Good Time!</h1>
+            <span className="tagline">May the Force be with you.</span>
+          </div>
         </div> 
         {/*<!--/.banner-->*/}
         
@@ -107,7 +141,9 @@ class App extends Component {
           <ContentBox title="Acting" image={require("./img/neymar-oscar.jpg")} content="And the Oscar Goes to... Neymar！" />
           <ContentBox title="Gamble" image={require("./img/gamble-soccer.jpg")} content="I have a dream that one day..." />
           <ContentBox title="Fans" image={require("./img/fans.jpg")} content="They are the most crazy animal in the planet." />
+          
           <ShowMore />
+        
         </div>
 
         <footer className="main-footer">
