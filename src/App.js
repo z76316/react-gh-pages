@@ -7,8 +7,6 @@ import neymarOscar from './img/neymar-oscar.jpg';
 import gambleSoccer from './img/gamble-soccer.jpg';
 import fans from './img/fans.jpg';
 
-var show = false;
-
 
 function ContentBox(prop) {
   let img = (prop.image);
@@ -29,12 +27,34 @@ ContentBox.propTypes = {
   content: PropTypes.string.isRequired,
 };
 
-function ShowMore() {
-  return (
-    <div>
-      <button id="toggleBox" onClick={() => {show = true; console.log(show)}}>Show more</button>
-    </div>
-  );
+class ShowMore extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDisplay: false,
+    };
+  }
+
+onStateChange = () => {
+    this.state.isDisplay = this.state.isDisplay ? false : true;
+    this.setState(this.state);
+  }
+
+  render() {
+    return (
+      <div>
+        <div style={{textAlign: 'center'}}>
+          <button id="toggleBox" onClick={this.onStateChange}>Show more</button>
+        </div>
+        <div className="hiding-first" style={{display: this.state.isDisplay ? 'block' : 'none'}}>
+          <ContentBox title="Box 5" image={require("./img/upset-messi.jpg")} content="Underdogs always hold huge hope." />
+          <ContentBox title="Box 6" image={require("./img/neymar-oscar.jpg")} content="And the Oscar Goes to... Neymar！" />
+          <ContentBox title="Box 7" image={require("./img/gamble-soccer.jpg")} content="I have a dream that one day..." />
+          <ContentBox title="Box 8" image={require("./img/fans.jpg")} content="They are the most crazy animal in the planet." />
+        </div>
+      </div>
+    );
+  }
 }
 
 class App extends Component {
@@ -87,42 +107,7 @@ class App extends Component {
           <ContentBox title="Acting" image={require("./img/neymar-oscar.jpg")} content="And the Oscar Goes to... Neymar！" />
           <ContentBox title="Gamble" image={require("./img/gamble-soccer.jpg")} content="I have a dream that one day..." />
           <ContentBox title="Fans" image={require("./img/fans.jpg")} content="They are the most crazy animal in the planet." />
-          
-        
-        <div style={{textAlign: 'center'}}>
           <ShowMore />
-          </div>
-          {/*<!-- showing up or hiding is control by button #toggleBox -->*/}
-          <div className="hiding-first">
-            <div className="box col">
-                <h2>Box 5</h2>
-                  <img src={upsetMessi} alt="Upset" />
-                <p>Underdog always hold huge hope.</p>
-              </div> 
-              {/*<!--/.box-5-->*/}
-              
-              <div className="box col">
-                <h2>Box 6</h2>
-                  <img src={neymarOscar} alt="Acting" />
-                <p>And the Oscar Goes to... Neymar！</p>
-              </div> 
-              {/*<!--/.box-6-->*/}
-              
-              <div className="box col">
-                <h2>Box 7</h2>
-                  <img src={gambleSoccer} alt="Gamble" />
-                <p>I have a dream that one day the soccer lottery in my pocket becomes...</p>
-              </div> 
-              {/*<!--/.box-7-->*/}
-
-              <div className="box col">
-                <h2>Box 8</h2>
-                  <img src={fans} alt="Fans" />
-                <p>They are the most crazy animal in the planet.</p>
-              </div> 
-              {/*<!--/.box-8-->*/}
-          </div>
-
         </div>
 
         <footer className="main-footer">
